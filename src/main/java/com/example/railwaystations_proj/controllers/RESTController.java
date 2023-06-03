@@ -115,4 +115,28 @@ public class RESTController {
         bossRepo.delete(boss.get());
         return "Success!";
     }
+
+    @PostMapping("/railwayStations")
+    private RailWayStation addNewStation(@RequestBody RailWayStation station){
+        railWayStationRepo.save(station);
+        return station;
+    }
+
+    @PutMapping("/railwayStations")
+    private RailWayStation editStation(@RequestBody RailWayStation station){
+        railWayStationRepo.save(station);
+        return station;
+    }
+
+    @DeleteMapping("/railwayStations/{stationName}")
+    private String deleteStation(@PathVariable String stationName){
+        RailWayStation station = railWayStationRepo.findAllByName(stationName);
+        if(station == null){
+            throw new NoSuchInfoException("There is no station with name = '" + stationName + "' in database.");
+        }
+
+        railWayStationRepo.delete(station);
+        return "Success!";
+    }
+
 }
