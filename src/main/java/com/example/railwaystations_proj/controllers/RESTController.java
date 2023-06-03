@@ -7,6 +7,7 @@ import com.example.railwaystations_proj.exc_handling.NoSuchInfoException;
 import com.example.railwaystations_proj.repositories.BossRepo;
 import com.example.railwaystations_proj.repositories.CityRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.relational.core.sql.In;
 import org.springframework.web.bind.annotation.*;
 import com.example.railwaystations_proj.repositories.RailWayStationRepo;
 
@@ -100,6 +101,29 @@ public class RESTController {
         }
 
         cityRepo.delete(city);
+        return "Success!";
+    }
+
+    @PostMapping("/bosses")
+    private Boss addNewBoss(@RequestBody Boss boss){
+        bossRepo.save(boss);
+        return boss;
+    }
+
+    @PutMapping("/bosses")
+    private Boss editBoss(@RequestBody Boss boss){
+        bossRepo.save(boss);
+        return boss;
+    }
+
+    @DeleteMapping("/bosses/{id}")
+    private String deleteBoss(@PathVariable Integer id){
+        Optional<Boss> boss = bossRepo.findById(id);
+        if(boss.isEmpty()){
+            throw new NoSuchInfoException("There is no boss with id = '" + id + "' in database.");
+        }
+
+        bossRepo.delete(boss.get());
         return "Success!";
     }
 }
