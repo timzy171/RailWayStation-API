@@ -17,10 +17,10 @@ import lombok.Setter;
 @AllArgsConstructor
 public class RailWayStation {
     @Id
-    private String name;
+    private Integer id;
 
-    @Column(name = "city")
-    private String city;
+    @Column(name = "name")
+    private String name;
 
     @Column(name = "year")
     private Integer year;
@@ -30,4 +30,7 @@ public class RailWayStation {
 
     @Column(name = "boss_id")
     private Integer boss_id;
+
+    @Column(name = "city_id")
+    private Integer city_id;
 }

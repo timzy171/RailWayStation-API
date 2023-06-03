@@ -17,7 +17,9 @@ import lombok.Setter;
 @AllArgsConstructor
 public class City {
     @Id
-    @Column(name = "city_name")
+    private Integer id;
+
+    @Column(name = "name")
     private String cityName;
 
     @Column(name = "district")

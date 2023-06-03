@@ -42,33 +42,23 @@ public class RESTController {
         return cityRepo.findAll();
     }
 
-    @GetMapping("/railwayStations/{name}")
-    private RailWayStation getRailWayStationByName(@PathVariable String name){
-        StringBuilder stringBuilder = new StringBuilder(name);
-        char ch = name.charAt(0);
-        stringBuilder.setCharAt(0,Character.toUpperCase(ch));
-        RailWayStation station = railWayStationRepo.findAllByName(stringBuilder.toString());
-
-        if(station == null){
-            throw new NoSuchInfoException("There is no railwayStation with ID = " + name + "in database.");
+    @GetMapping("/railwayStations/{id}")
+    private RailWayStation getRailWayStationById(@PathVariable Integer id){
+        Optional<RailWayStation> station = railWayStationRepo.findById(id);
+        if(station.isEmpty()){
+            throw new NoSuchInfoException("There is no railwayStation with ID = " + id + "in database.");
         }
-
-        return station;
+        return station.get();
     }
 
 
-    @GetMapping("/cities/{cityName}")
-    private City getCitiesByName(@PathVariable String cityName){
-        StringBuilder stringBuilder = new StringBuilder(cityName);
-        char ch = cityName.charAt(0);
-        stringBuilder.setCharAt(0,Character.toUpperCase(ch));
-        City city = cityRepo.findByCityName(stringBuilder.toString());
-
-        if(city == null){
-            throw new NoSuchInfoException("There is no city with cityName = '" + cityName + "' in database.");
+    @GetMapping("/cities/{id}")
+    private City getCitiesById(@PathVariable Integer id){
+        Optional<City> city = cityRepo.findById(id);
+        if(city.isEmpty()){
+            throw new NoSuchInfoException("There is no city with id = '" + id + "' in database.");
         }
-
-        return city;
+        return city.get();
     }
 
     @GetMapping("/bosses/{id}")
@@ -92,14 +82,14 @@ public class RESTController {
         return city;
     }
 
-    @DeleteMapping("/cities/{cityName}")
-    private String deleteCity(@PathVariable String cityName){
-        City city = cityRepo.findByCityName(cityName);
-        if(city == null){
-            throw new NoSuchInfoException("There is no city with cityName = '" + cityName + "' in database.");
+    @DeleteMapping("/cities/{id}")
+    private String deleteCity(@PathVariable Integer id){
+        Optional<City> city = cityRepo.findById(id);
+        if(city.isEmpty()){
+            throw new NoSuchInfoException("There is no city with id = '" + id + "' in database.");
         }
 
-        cityRepo.delete(city);
+        cityRepo.delete(city.get());
         return "Success!";
     }
 
